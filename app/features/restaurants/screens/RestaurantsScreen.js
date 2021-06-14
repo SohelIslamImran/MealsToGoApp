@@ -1,21 +1,30 @@
-import React, { useState } from "react";
-import { Searchbar } from "react-native-paper";
+import React, { useContext, useState } from "react";
+import { Colors, Searchbar } from "react-native-paper";
 
+import SafeArea from "../../../components/SafeArea";
+import Spacer from "../../../components/Spacer";
+import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
+import RestaurantInfoCard from "../components/RestaurantInfoCard";
 import {
+  Loading,
+  LoadingContainer,
   RestaurantList,
-  SafeArea,
   SearchContainer,
 } from "../styles/Restaurants";
-import RestaurantInfoCard from "../components/RestaurantInfoCard";
-import Spacer from "../../../components/Spacer";
 
 const RestaurantsScreen = () => {
+  const { isLoading, error, restaurants } = useContext(RestaurantsContext);
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
   return (
     <SafeArea>
+      {isLoading && (
+        <LoadingContainer>
+          <Loading size={50} animating={true} color={Colors.deepOrange400} />
+        </LoadingContainer>
+      )}
       <SearchContainer>
         <Searchbar
           placeholder="Search"
@@ -24,25 +33,10 @@ const RestaurantsScreen = () => {
         />
       </SearchContainer>
       <RestaurantList
-        data={[
-          { name: 1 },
-          { name: 2 },
-          { name: 3 },
-          { name: 4 },
-          { name: 5 },
-          { name: 6 },
-          { name: 7 },
-          { name: 8 },
-          { name: 9 },
-          { name: 10 },
-          { name: 11 },
-          { name: 12 },
-          { name: 13 },
-          { name: 14 },
-        ]}
-        renderItem={() => (
+        data={restaurants}
+        renderItem={({ item }) => (
           <Spacer position="bottom" size="large">
-            <RestaurantInfoCard />
+            <RestaurantInfoCard restaurant={item} />
           </Spacer>
         )}
         keyExtractor={(item) => item.name.toString()}

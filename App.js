@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ThemeProvider } from "styled-components/native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   useFonts as useOswaldFont,
   Oswald_400Regular,
@@ -12,6 +14,9 @@ import {
 
 import RestaurantsScreen from "./app/features/restaurants/screens/RestaurantsScreen";
 import theme from "./app/infrastructure/theme";
+import RestaurantsContextProvider from "./app/services/restaurants/RestaurantsContext";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [oswaldFontLoaded] = useOswaldFont({
@@ -29,7 +34,11 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <RestaurantsScreen />
+        <RestaurantsContextProvider>
+          <NavigationContainer>
+            <RestaurantsScreen />
+          </NavigationContainer>
+        </RestaurantsContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>

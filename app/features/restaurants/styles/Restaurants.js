@@ -1,10 +1,15 @@
 import styled from "styled-components/native";
-import { StatusBar } from "react-native";
-import { Card } from "react-native-paper";
+import { ActivityIndicator, Card } from "react-native-paper";
 
-export const SafeArea = styled.SafeAreaView`
-  flex: 1;
-  ${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px;`}
+export const Loading = styled(ActivityIndicator)`
+  width: 100%;
+  height: 100%;
+`;
+
+export const LoadingContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  height: 100%;
 `;
 
 export const SearchContainer = styled.View`
