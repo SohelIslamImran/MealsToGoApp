@@ -4,12 +4,15 @@ import { ActivityIndicator, Card } from "react-native-paper";
 export const Loading = styled(ActivityIndicator)`
   width: 100%;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.ui.quaternary};
 `;
 
 export const LoadingContainer = styled.View`
   position: absolute;
   width: 100%;
   height: 100%;
+  opacity: 0.8;
+  z-index: 1;
 `;
 
 export const SearchContainer = styled.View`
