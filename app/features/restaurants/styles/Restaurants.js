@@ -17,6 +17,7 @@ export const LoadingContainer = styled.View`
 
 export const SearchContainer = styled.View`
   padding: ${({ theme }) => theme.space[3]};
+  padding-bottom: ${({ theme }) => theme.space[1]};
 `;
 
 export const RestaurantList = styled.FlatList.attrs({

@@ -15,25 +15,33 @@ const LocationContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!keyword.length) return;
-    setIsLoading(true);
+    if (keyword.length) {
+      setIsLoading(true);
 
-    const getLocation = async () => {
-      try {
-        const result = await locationRequest(keyword.toLowerCase());
-        setLocation(result);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err);
-        setIsLoading(false);
-      }
-    };
-    getLocation();
+      const getLocation = async () => {
+        try {
+          const result = await locationRequest(keyword.toLowerCase());
+          setLocation(result);
+          setIsLoading(false);
+        } catch (err) {
+          setError(err);
+          setIsLoading(false);
+        }
+      };
+      getLocation();
+    }
   }, [keyword]);
 
   return (
     <LocationContext.Provider
-      value={{ isLoading, error, location, search: onSearch, keyword }}
+      value={{
+        isLoading,
+        setIsLoading,
+        error,
+        location,
+        search: onSearch,
+        keyword,
+      }}
     >
       {children}
     </LocationContext.Provider>

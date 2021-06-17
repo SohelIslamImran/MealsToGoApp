@@ -14,6 +14,7 @@ import theme from "./app/infrastructure/theme";
 import RestaurantsContextProvider from "./app/services/restaurants/RestaurantsContext";
 import LocationContextProvider from "./app/services/location/LocationContext";
 import AppNavigator from "./app/navigation/AppNavigator";
+import FavouritesContextProvider from "./app/services/favourites/FavouritesContext";
 
 export default function App() {
   const [oswaldFontLoaded] = useOswaldFont({
@@ -31,11 +32,13 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <LocationContextProvider>
-          <RestaurantsContextProvider>
-            <AppNavigator />
-          </RestaurantsContextProvider>
-        </LocationContextProvider>
+        <FavouritesContextProvider>
+          <LocationContextProvider>
+            <RestaurantsContextProvider>
+              <AppNavigator />
+            </RestaurantsContextProvider>
+          </LocationContextProvider>
+        </FavouritesContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>

@@ -16,10 +16,9 @@ const locationRequest = async (searchTerm) => {
 
 const locationTransform = (result) => {
   const { geometry } = camelize(result.results[0]);
-  const { lat, lng } = geometry.location;
-  const locationString = `${lat},${lng}`;
+  const { lat, lng, viewport } = geometry.location;
 
-  return locationString;
+  return { lat, lng, viewport };
 };
 
 export default locationRequest;

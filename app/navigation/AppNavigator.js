@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import SafeArea from "../components/SafeArea";
 import RestaurantsNavigator from "./RestaurantsNavigator";
+import MapScreen from "../features/map/screens/MapScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,11 +30,6 @@ const Settings = () => (
     <Text>Settings</Text>
   </SafeArea>
 );
-const Map = () => (
-  <SafeArea>
-    <Text>Map</Text>
-  </SafeArea>
-);
 
 const AppNavigator = () => {
   return (
@@ -47,7 +43,7 @@ const AppNavigator = () => {
         }}
       >
         <Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
-        <Tab.Screen name="Map" component={Map} />
+        <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={Settings} />
       </Tab.Navigator>
     </NavigationContainer>
