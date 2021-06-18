@@ -2,8 +2,8 @@ import React from "react";
 import { SvgXml } from "react-native-svg";
 
 import Spacer from "../../../components/Spacer";
-import star from "../../../../assets/star";
-import open from "../../../../assets/open";
+import star from "../../../assets/star";
+import open from "../../../assets/open";
 import Text from "../../../components/Text";
 import Favourite from "../../../components/favourites/Favourite";
 import {

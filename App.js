@@ -1,44 +1,24 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
-import {
-  useFonts as useOswaldFont,
-  Oswald_400Regular,
-} from "@expo-google-fonts/oswald";
-import {
-  useFonts as useLatoFont,
-  Lato_400Regular,
-} from "@expo-google-fonts/lato";
 
 import theme from "./app/infrastructure/theme";
-import RestaurantsContextProvider from "./app/services/restaurants/RestaurantsContext";
-import LocationContextProvider from "./app/services/location/LocationContext";
-import AppNavigator from "./app/navigation/AppNavigator";
-import FavouritesContextProvider from "./app/services/favourites/FavouritesContext";
+import AuthContextProvider from "./app/services/authentication/AuthenticationContext";
+import Navigation from "./app/navigation";
+import useFonts from "./app/utils/useFonts";
 
 export default function App() {
-  const [oswaldFontLoaded] = useOswaldFont({
-    Oswald_400Regular,
-  });
-
-  const [latoFontLoaded] = useLatoFont({
-    Lato_400Regular,
-  });
-
-  if (!oswaldFontLoaded || !latoFontLoaded) {
+  const fontsLoaded = useFonts();
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <AppNavigator />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthContextProvider>
+          <Navigation />
+        </AuthContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>
