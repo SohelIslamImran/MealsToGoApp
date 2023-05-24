@@ -16,6 +16,7 @@ import {
 import useAuth from "../../../services/authentication/useAuth";
 
 const LoginScreen = ({ navigation }) => {
+  const { logIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { error, isLoading } = useContext(AuthContext);
@@ -53,7 +54,7 @@ const LoginScreen = ({ navigation }) => {
             <AuthButton
               icon="lock-open-outline"
               mode="contained"
-              onPress={() => useAuth.logIn(email, password)}
+              onPress={() => logIn(email, password)}
             >
               Login
             </AuthButton>

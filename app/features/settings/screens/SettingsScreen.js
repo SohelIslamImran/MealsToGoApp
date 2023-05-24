@@ -9,6 +9,7 @@ import { AuthContext } from "../../../services/authentication/AuthenticationCont
 import SafeArea from "../../../components/SafeArea";
 import Spacer from "../../../components/Spacer";
 import Text from "../../../components/Text";
+import useAuth from "../../../services/authentication/useAuth";
 
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.space[3]};
@@ -18,29 +19,33 @@ const AvatarContainer = styled.View`
 `;
 
 const SettingsScreen = ({ navigation }) => {
-  const { onLogout, user } = useContext(AuthContext);
+  const { logOut } = useAuth();
+  const { user } = useContext(AuthContext);
   const [photo, setPhoto] = useState(null);
 
-  const getProfilePicture = async (currentUser) => {
-    const photoUri = await AsyncStorage.getItem(`${currentUser.uid}-photo`);
+  const getProfilePicture = async () => {
+    const photoUri = await AsyncStorage.getItem(`${user.uid}-photo`);
     setPhoto(photoUri);
   };
 
   useFocusEffect(() => {
-    getProfilePicture(user);
-  }, [user]);
+    getProfilePicture();
+  }, []);
 
   return (
     <SafeArea>
       <AvatarContainer>
         <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-          {!photo && (
-            <Avatar.Icon size={180} icon="human" backgroundColor="#2182BD" />
-          )}
-          {photo && (
+          {photo ? (
             <Avatar.Image
               size={180}
               source={{ uri: photo }}
+              backgroundColor="#2182BD"
+            />
+          ) : (
+            <Avatar.Image
+              size={180}
+              source={{ uri: "https://i.ibb.co/5GzXkwq/user.png" }}
               backgroundColor="#2182BD"
             />
           )}
@@ -60,7 +65,7 @@ const SettingsScreen = ({ navigation }) => {
         <SettingsItem
           title="Logout"
           left={(props) => <List.Icon {...props} color="black" icon="door" />}
-          onPress={onLogout}
+          onPress={logOut()}
         />
       </List.Section>
     </SafeArea>

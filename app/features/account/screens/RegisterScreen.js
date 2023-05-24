@@ -16,6 +16,7 @@ import {
 import useAuth from "../../../services/authentication/useAuth";
 
 const RegisterScreen = ({ navigation }) => {
+  const { register } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
@@ -32,6 +33,7 @@ const RegisterScreen = ({ navigation }) => {
           textContentType="emailAddress"
           keyboardType="email-address"
           autoCapitalize="none"
+          autoCorrect={false}
           onChangeText={(u) => setEmail(u)}
         />
         <Spacer size="large">
@@ -40,6 +42,7 @@ const RegisterScreen = ({ navigation }) => {
             value={password}
             textContentType="password"
             secureTextEntry
+            autoCorrect={false}
             autoCapitalize="none"
             onChangeText={(p) => setPassword(p)}
           />
@@ -50,6 +53,7 @@ const RegisterScreen = ({ navigation }) => {
             value={repeatedPassword}
             textContentType="password"
             secureTextEntry
+            autoCorrect={false}
             autoCapitalize="none"
             onChangeText={(p) => setRepeatedPassword(p)}
           />
@@ -64,9 +68,7 @@ const RegisterScreen = ({ navigation }) => {
             <AuthButton
               icon="email"
               mode="contained"
-              onPress={() =>
-                useAuth.register(email, password, repeatedPassword)
-              }
+              onPress={() => register(email, password, repeatedPassword)}
             >
               Register
             </AuthButton>

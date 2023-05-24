@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
-import useAuth from "./useAuth";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export const AuthContext = createContext();
 
@@ -9,8 +10,12 @@ const AuthContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    //useAuth.getUser();
-  }, []);
+    setIsLoading(true);
+    firebase.auth().onAuthStateChanged(({ email }) => {
+      setLoggedInUser({ isSignedIn: true, email });
+      setIsLoading(true);
+    });
+  }, [loggedInUser]);
 
   return (
     <AuthContext.Provider

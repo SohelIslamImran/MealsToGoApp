@@ -10,27 +10,12 @@ import firebaseConfig from "./firebaseConfig";
 const useAuth = () => {
   const { setLoggedInUser, setIsLoading, setError } = useContext(AuthContext);
 
-  const getUser = () => {
-    setIsLoading(true);
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setLoggedInUser(user);
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
-      }
-    });
-  };
-
   const logIn = (email, password) => {
     setIsLoading(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        setLoggedInUser(user);
-        setIsLoading(false);
-      })
+      .then(({ user }) => setUser(user))
       .catch((err) => {
         setError(err.toString());
         setIsLoading(false);
@@ -46,10 +31,7 @@ const useAuth = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        setLoggedInUser(user);
-        setIsLoading(false);
-      })
+      .then(({ user }) => setUser(user))
       .catch((err) => {
         setError(err.toString());
         setIsLoading(false);
@@ -66,18 +48,13 @@ const useAuth = () => {
       });
   };
 
-  const handleResponse = (res) => {
-    const { displayName, photoURL, email } = res.user;
-    const signedInUser = {
-      isSignedIn: true,
-      name: displayName,
-      email: email,
-      photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png",
-    };
-    return signedInUser;
+  const setUser = ({ email }) => {
+    const signedInUser = { isSignedIn: true, email };
+    setLoggedInUser(signedInUser);
+    setIsLoading(false);
   };
 
-  return { getUser, logIn, register, logOut };
+  return { logIn, register, logOut };
 };
 
 export default useAuth;

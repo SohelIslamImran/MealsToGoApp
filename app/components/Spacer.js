@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { useTheme } from "styled-components/native";
 
-const Spacer = ({ position, size, children }) => {
+const Spacer = ({ position = "top", size, children }) => {
   const theme = useTheme();
 
   const SpacerView = styled.View`

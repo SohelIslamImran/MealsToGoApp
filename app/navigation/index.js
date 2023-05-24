@@ -8,9 +8,13 @@ import AccountNavigator from "./AccountNavigator";
 const Navigation = () => {
   const { user } = useContext(AuthContext);
 
+  console.log("====================================");
+  console.log("user", user);
+  console.log("====================================");
+
   return (
     <NavigationContainer>
-      {user ? <AppNavigator /> : <AccountNavigator />}
+      {user?.isSignedIn ? <AppNavigator /> : <AccountNavigator />}
     </NavigationContainer>
   );
 };
